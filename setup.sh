@@ -28,7 +28,7 @@ detect_os() {
   esac
 }
 
-info "Iniciando setup do projeto comite-paraolimpico-cadastro"
+info "Iniciando setup do projeto — CPB Registrar Clube"
 os="$(detect_os)"
 info "Sistema detectado: ${os}"
 
@@ -76,10 +76,12 @@ fi
 info "Setup concluído!"
 echo
 echo "Próximos passos:"
+echo "  npm run test:flow"
 echo "  npm run test:positive"
 echo "  npm run test:negative"
 echo "  npm run test:api"
-echo "  npm run perf"
+echo "  npm run test:open   # interface gráfica"
+echo "  npm run perf        # requer k6 instalado"
 
 echo
 if [ ! -d .git ]; then

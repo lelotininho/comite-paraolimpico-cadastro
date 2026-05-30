@@ -1,0 +1,140 @@
+name: Cypress Tests — CPB Registrar Clube
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  cypress-api:
+    name: API Tests (CT-A)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run API tests
+        uses: cypress-io/github-action@v6
+        with:
+          spec: cypress/e2e/api/**/*.cy.js
+          browser: chrome
+          headless: true
+        env:
+          CYPRESS_BASE_URL: https://homologcadastroweb.cpb.org.br/cadastro-geral-web
+          CYPRESS_API_BASE_URL: https://homologcadastroweb.cpb.org.br/api/cadastro-api/v1
+
+      - name: Upload screenshots (falhas)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots-api
+          path: cypress/screenshots
+
+  cypress-flow:
+    name: Flow Tests (CT-F)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run flow tests
+        uses: cypress-io/github-action@v6
+        with:
+          spec: cypress/e2e/flow/**/*.cy.js
+          browser: chrome
+          headless: true
+        env:
+          CYPRESS_BASE_URL: https://homologcadastroweb.cpb.org.br/cadastro-geral-web
+          CYPRESS_API_BASE_URL: https://homologcadastroweb.cpb.org.br/api/cadastro-api/v1
+          CYPRESS_KEYCLOAK_ORIGIN: https://homologlogin.cpb.org.br
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots-flow
+          path: cypress/screenshots
+
+  cypress-positive:
+    name: Positive Tests (CT-P)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run positive tests
+        uses: cypress-io/github-action@v6
+        with:
+          spec: cypress/e2e/positive/**/*.cy.js
+          browser: chrome
+          headless: true
+        env:
+          CYPRESS_BASE_URL: https://homologcadastroweb.cpb.org.br/cadastro-geral-web
+          CYPRESS_API_BASE_URL: https://homologcadastroweb.cpb.org.br/api/cadastro-api/v1
+          CYPRESS_KEYCLOAK_ORIGIN: https://homologlogin.cpb.org.br
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots-positive
+          path: cypress/screenshots
+
+  cypress-negative:
+    name: Negative Tests (CT-N)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run negative tests
+        uses: cypress-io/github-action@v6
+        with:
+          spec: cypress/e2e/negative/**/*.cy.js
+          browser: chrome
+          headless: true
+        env:
+          CYPRESS_BASE_URL: https://homologcadastroweb.cpb.org.br/cadastro-geral-web
+          CYPRESS_API_BASE_URL: https://homologcadastroweb.cpb.org.br/api/cadastro-api/v1
+          CYPRESS_KEYCLOAK_ORIGIN: https://homologlogin.cpb.org.br
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots-negative
+          path: cypress/screenshots

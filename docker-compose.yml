@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  cypress:
+    image: cypress/included:13.17.0
+    working_dir: /e2e
+    volumes:
+      - .:/e2e
+    environment:
+      - CYPRESS_BASE_URL=https://homologcadastroweb.cpb.org.br/cadastro-geral-web
+      - CYPRESS_API_BASE_URL=https://homologcadastroweb.cpb.org.br/api/cadastro-api/v1
+      - CYPRESS_KEYCLOAK_ORIGIN=https://homologlogin.cpb.org.br
+    command: >
+      --browser chrome --headless
+      --spec "cypress/e2e/**/*.cy.js"
