@@ -36,6 +36,24 @@ npx cypress install
 
 > Observação: O `k6` precisa estar instalado no sistema para rodar `npm run perf`. Em macOS, use `brew install k6`.
 
+## Instalação automática
+
+Execute o script de bootstrap para instalar dependências e gerar o ambiente inicial:
+
+```bash
+bash setup.sh
+```
+
+O script faz o seguinte:
+
+- valida `node` e `npm`
+- instala dependências do projeto via `npm install`
+- instala o binário do Cypress (`npx cypress install`)
+- cria `.env` a partir de `.env.example` quando necessário
+- em macOS, tenta instalar `gh` se `brew` estiver disponível
+
+Se não houver Homebrew instalado, o script exibirá os comandos necessários para instalar `brew`, `gh` e `k6`.
+
 ## Configuração de ambiente
 
 O Cypress usa `http://localhost:3000` por padrão. Se necessário, defina as variáveis abaixo:

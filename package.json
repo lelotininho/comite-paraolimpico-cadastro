@@ -7,6 +7,7 @@
   "scripts": {
     "serve": "node server/server.js",
     "test": "npx cypress run",
+    "setup": "bash setup.sh",
     "test:positive": "npx cypress run --spec \"cypress/e2e/positive/**/*.cy.js\"",
     "test:negative": "npx cypress run --spec \"cypress/e2e/negative/**/*.cy.js\"",
     "test:api": "npx cypress run --spec \"cypress/e2e/api/**/*.cy.js\"",
