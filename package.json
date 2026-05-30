@@ -1,0 +1,26 @@
+{
+  "name": "comite-paraolimpico-cadastro",
+  "version": "0.1.0",
+  "author": "Wesley",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "serve": "node server/server.js",
+    "test": "npx cypress run",
+    "test:positive": "npx cypress run --spec \"cypress/e2e/positive/**/*.cy.js\"",
+    "test:negative": "npx cypress run --spec \"cypress/e2e/negative/**/*.cy.js\"",
+    "test:api": "npx cypress run --spec \"cypress/e2e/api/**/*.cy.js\"",
+    "test:all": "npm run test:positive && npm run test:negative && npm run test:api",
+    "test:open": "npx cypress open",
+    "perf": "k6 run k6/registration.js",
+    "collect:evidence": "node evidence-collector/index.js",
+    "generate:metrics": "node metrics/summary-generator.js"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.1.0",
+    "cypress": "^14.2.0"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
